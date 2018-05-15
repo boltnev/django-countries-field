@@ -29,7 +29,7 @@ class BaseTestCase(TestCase):
 
 class CountriesFieldTests(BaseTestCase):
     def setUp(self):
-        self.initial_countries = ["ru", "UA", "Au", "XR"]
+        self.initial_countries = ["ru", "UA", "Au", "XC"]
         self.testee = TestCountriesModel.objects.create(
             countries=self.initial_countries)
 
@@ -157,16 +157,16 @@ class FiltersTestCase(BaseTestCase):
 class CrimeaTestCase(BaseTestCase):
 
     def test_countries_to_bin(self):
-        bins = countries_to_bin(["XR"])
-        self.assertEqual(bins, [0, 0, 0, 2**60])
+        bins = countries_to_bin(["XC"])
+        self.assertEqual(bins, [0, 0, 0, 2**62])
 
     def test_bin_to_countries(self):
-        countries = bin_to_countries([0, 0, 0, 2**60])
-        self.assertEqual(countries, ["XR"])
+        countries = bin_to_countries([0, 0, 0, 2**62])
+        self.assertEqual(countries, ["XC"])
 
     def test_contains_exact(self):
-        self.country = TestCountriesModel.objects.create(countries=['xr'])
-        countries = TestCountriesModel.objects.filter(countries_exact(['XR']))
+        self.country = TestCountriesModel.objects.create(countries=['xc'])
+        countries = TestCountriesModel.objects.filter(countries_exact(['XC']))
 
         self.assertEqual(countries.count(), 1)
         self.assertIn(self.country, countries)
