@@ -10,6 +10,7 @@ from .forms import CountriesFormField
 VALID_BINARY_MASK = (1 << MAX_FLAG_COUNT) - 1
 
 ALPHA2_INDEX = [c.alpha2 for c in pycountry.countries]
+ALPHA2_INDEX.append("XR") # Крым как страна в ISO-стандарте такого кода нет
 ALPHA2_MAP = {c: p for p, c in enumerate(ALPHA2_INDEX)}
 
 

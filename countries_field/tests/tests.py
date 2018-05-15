@@ -7,7 +7,8 @@ from django.test import TestCase
 
 from countries_field.fields import (CountriesValue, countries_contains,
                                     countries_contains_exact, countries_exact,
-                                    countries_isnull)
+                                    countries_isnull,
+                                    countries_to_bin, bin_to_countries)
 from .models import TestCountriesModel
 
 
@@ -28,7 +29,7 @@ class BaseTestCase(TestCase):
 
 class CountriesFieldTests(BaseTestCase):
     def setUp(self):
-        self.initial_countries = ["ru", "UA", "Au"]
+        self.initial_countries = ["ru", "UA", "Au", "XR"]
         self.testee = TestCountriesModel.objects.create(
             countries=self.initial_countries)
 
@@ -141,7 +142,7 @@ class FiltersTestCase(BaseTestCase):
         self.assertIn(self.country3, countries)
 
     def testExact(self):
-        countries = TestCountriesModel.objects.filter(countries_exact(['ru']))
+        countries = TestCountriesModel.objects.filter(countries_exact(['RU']))
 
         self.assertEqual(countries.count(), 1)
         self.assertIn(self.country4, countries)
@@ -151,3 +152,22 @@ class FiltersTestCase(BaseTestCase):
 
         self.assertEqual(countries.count(), 1)
         self.assertIn(self.country2, countries)
+
+
+class CrimeaTestCase(BaseTestCase):
+
+    def test_countries_to_bin(self):
+        bins = countries_to_bin(["XR"])
+        self.assertEqual(bins, [0, 0, 0, 2**60])
+
+    def test_bin_to_countries(self):
+        countries = bin_to_countries([0, 0, 0, 2**60])
+        self.assertEqual(countries, ["XR"])
+
+    def test_contains_exact(self):
+        self.country = TestCountriesModel.objects.create(countries=['xr'])
+        countries = TestCountriesModel.objects.filter(countries_exact(['XR']))
+
+        self.assertEqual(countries.count(), 1)
+        self.assertIn(self.country, countries)
+
