@@ -40,7 +40,7 @@ ALPHA2_INDEX = [
 ]
 
 
-EXTRA_COUNTRIES = getattr(settings, 'EXTRA_COUNTRIES', [])
+EXTRA_COUNTRIES = getattr(settings, 'EXTRA_COUNTRIES', {})
 
 gap = 4 * MAX_FLAG_COUNT - len(ALPHA2_INDEX) - len(EXTRA_COUNTRIES)
 assert(gap >= 0, "too many extra countries")
