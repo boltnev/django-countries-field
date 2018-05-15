@@ -45,4 +45,4 @@ EXTRA_COUNTRIES = getattr(settings, 'EXTRA_COUNTRIES', {})
 gap = 4 * MAX_FLAG_COUNT - len(ALPHA2_INDEX) - len(EXTRA_COUNTRIES)
 assert(gap >= 0, "too many extra countries")
 
-ALL_COUNTRIES = ALPHA2_INDEX + [None] * gap + EXTRA_COUNTRIES.keys()
+ALL_COUNTRIES = ALPHA2_INDEX + [None] * gap + list(EXTRA_COUNTRIES.keys())
