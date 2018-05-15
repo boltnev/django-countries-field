@@ -6,7 +6,7 @@ from django.conf import settings
 from .bitfield.models import MAX_FLAG_COUNT
 
 if 'test' in sys.argv and getattr(settings, 'EXTRA_COUNTRIES', None) is None:
-    settings.EXTRA_COUNTRIES = ['XC'] # XC for Crimea
+    settings.EXTRA_COUNTRIES = {'XC':u'Крым'} # XC for Crimea
 
 ALPHA2_INDEX = [
     u'AF', u'AX', u'AL', u'DZ', u'AS', u'AD', u'AO', u'AI', u'AQ',
@@ -45,4 +45,4 @@ EXTRA_COUNTRIES = getattr(settings, 'EXTRA_COUNTRIES', [])
 gap = 4 * MAX_FLAG_COUNT - len(ALPHA2_INDEX) - len(EXTRA_COUNTRIES)
 assert(gap >= 0, "too many extra countries")
 
-ALL_COUNTRIES = ALPHA2_INDEX + [None] * gap + EXTRA_COUNTRIES
+ALL_COUNTRIES = ALPHA2_INDEX + [None] * gap + EXTRA_COUNTRIES.keys()
