@@ -1,5 +1,4 @@
 # coding: utf-8
-import pycountry
 from django.db import models
 from django.db.models.fields.subclassing import Creator
 
