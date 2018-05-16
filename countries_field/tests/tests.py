@@ -9,6 +9,8 @@ from countries_field.fields import (CountriesValue, countries_contains,
                                     countries_contains_exact, countries_exact,
                                     countries_isnull,
                                     countries_to_bin, bin_to_countries)
+from countries_field.forms import CountriesFormField
+
 from .models import TestCountriesModel
 
 
@@ -171,3 +173,11 @@ class CrimeaTestCase(BaseTestCase):
         self.assertEqual(countries.count(), 1)
         self.assertIn(self.country, countries)
 
+
+class FormFieldChoicesTestCase(BaseTestCase):
+
+    def test_generate_countries_choices(self):
+        field = CountriesFormField()
+        choices = field.generate_countries_choices()
+        self.assertIn((u'RU', u'Russian Federation'), choices)
+        self.assertIn((u'XC', u'Крым'), choices)
