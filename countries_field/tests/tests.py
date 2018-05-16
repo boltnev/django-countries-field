@@ -180,4 +180,4 @@ class FormFieldChoicesTestCase(BaseTestCase):
         field = CountriesFormField()
         choices = field.generate_countries_choices()
         self.assertIn((u'RU', u'Russian Federation'), choices)
-        self.assertIn((u'XC', u'Крым'), choices)
+        self.assertIn((u'XC', u'Crimea'), choices)
