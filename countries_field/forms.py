@@ -27,7 +27,7 @@ class CountriesFormField(MultipleChoiceField):
         """ Генерирует choices для стран по iso3166. """
         choices = [(c.alpha2, c.name) for c in pycountry.countries
                                       if c.alpha2 in ALL_COUNTRIES]
-        choices += EXTRA_COUNTRIES.items()
+        choices += [c for c in EXTRA_COUNTRIES if c]
         if settings.USE_I18N:
             try:
                 lang = settings.LANGUAGE_CODE[0:2]

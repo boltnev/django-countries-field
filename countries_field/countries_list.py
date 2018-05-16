@@ -6,8 +6,10 @@ from django.conf import settings
 from .bitfield.models import MAX_FLAG_COUNT
 
 if 'test' in sys.argv and getattr(settings, 'EXTRA_COUNTRIES', None) is None:
-    settings.EXTRA_COUNTRIES = {'XC':u'Крым'} # XC for Crimea
+    settings.EXTRA_COUNTRIES = [None, None, ('XC', u'Крым')] # XC for Crimea
 
+# Порядок и количество стран заданы жестко для совместимости в случае
+# обновления pycountry
 ALPHA2_INDEX = [
     u'AF', u'AX', u'AL', u'DZ', u'AS', u'AD', u'AO', u'AI', u'AQ',
     u'AG', u'AR', u'AM', u'AW', u'AU', u'AT', u'AZ', u'BS', u'BH',
@@ -40,9 +42,11 @@ ALPHA2_INDEX = [
 ]
 
 
-EXTRA_COUNTRIES = getattr(settings, 'EXTRA_COUNTRIES', {})
+EXTRA_COUNTRIES = getattr(settings, 'EXTRA_COUNTRIES', [])
 
-gap = 4 * MAX_FLAG_COUNT - len(ALPHA2_INDEX) - len(EXTRA_COUNTRIES)
-assert(gap >= 0, "too many extra countries")
+if EXTRA_COUNTRIES:
+    gap = 4 * MAX_FLAG_COUNT - len(ALPHA2_INDEX) - len(EXTRA_COUNTRIES)
+    assert(gap == 0), "count of extra countres can be only {}"\
+        .format(4 * MAX_FLAG_COUNT - len(ALPHA2_INDEX))
 
-ALL_COUNTRIES = ALPHA2_INDEX + [None] * gap + list(EXTRA_COUNTRIES.keys())
+ALL_COUNTRIES = ALPHA2_INDEX +  [c[0] if c else None for c in EXTRA_COUNTRIES]
