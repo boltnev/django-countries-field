@@ -13,4 +13,4 @@ install:
   - pip install Django==$DJANGO
   - pip install -e .
 
-script: python setup.py test
+script: TEST_EXTRA=1 python setup.py test

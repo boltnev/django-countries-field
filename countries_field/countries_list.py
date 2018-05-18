@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
+import os
 import sys
 
 from django.conf import settings
 
 from .bitfield.models import MAX_FLAG_COUNT
 
-if 'test' in sys.argv and getattr(settings, 'EXTRA_COUNTRIES', None) is None:
+if 'TEST_EXTRA' in os.environ:
     settings.EXTRA_COUNTRIES = [None, None, ('XC', u'Crimea')] # XC for Crimea
 
 # Порядок и количество стран заданы жестко для совместимости в случае
