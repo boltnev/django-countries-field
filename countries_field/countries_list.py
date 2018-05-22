@@ -1,7 +1,4 @@
 # -*- coding: utf-8 -*-
-import os
-import sys
-
 from django.conf import settings
 
 from .bitfield.models import MAX_FLAG_COUNT
