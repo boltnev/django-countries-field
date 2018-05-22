@@ -6,9 +6,6 @@ from django.conf import settings
 
 from .bitfield.models import MAX_FLAG_COUNT
 
-if 'TEST_EXTRA' in os.environ:
-    settings.EXTRA_COUNTRIES = [None, None, ('XC', u'Crimea')] # XC for Crimea
-
 # Порядок и количество стран заданы жестко для совместимости в случае
 # обовления pycountry
 ALPHA2_INDEX = [
